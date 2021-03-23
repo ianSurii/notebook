@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+<AutoCompleteTextView
+    android:id="@+id/from"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+</AutoCompleteTextView>
+
+    <AutoCompleteTextView
+        android:id="@+id/to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        >
+        
+    </AutoCompleteTextView>
+    <TextView
+        android:id="@+id/TvLatFrom"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="140dp"
+        />
+    <TextView
+        android:id="@+id/TvLatTo"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="160dp"
+        />
+    <TextView
+        android:id="@+id/distance"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="200dp"
+        />
+    <Button
+        android:id="@+id/Caldistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:text="Calculate the distance"
+        android:onClick="CalDistance"
+        />
+</RelativeLayout>
