@@ -26,7 +26,7 @@ class Core {
 
   Future<Database> initializeDatabase() async {
     var dir = await getDatabasesPath();
-    var path = dir + "notebook.db";
+    var path = dir + "surii.db";
 
     var database = await openDatabase(
       path,
@@ -57,15 +57,36 @@ class Core {
     print('result : $result');
   }
 
+  void updateCart(String table, Cart model) async {
+    var db = await this.database;
+    if (model.status == 0) {
+      model.status = 1;
+    } else {
+      model.status = 0;
+    }
+    // where noteid and id == model.id and item == model.item
+    print(model.id.toString() + "ID");
+    var result = await db!.update(
+      table,
+      model.toMap(),
+      where: 'id = ?',
+      whereArgs: [model.id],
+    );
+
+    print('result : $result');
+  }
+
   Future<List<Cart>> getCart(int noteid) async {
     List<Cart> _cart = [];
 
     var db = await this.database;
-    var result = await db!.query("notes");
+    var result =
+        await db!.query("cartitem", where: 'noteid = ?', whereArgs: [noteid]);
     result.forEach((element) {
       var cart = Cart.fromMap(element);
       _cart.add(cart);
     });
+    print("LENGHT : ${_cart.length}");
 
     return _cart;
   }
@@ -81,6 +102,12 @@ class Core {
     });
 
     return _note;
+  }
+
+  void deleteNote(String table, int id) async {
+    var db = await this.database;
+    var result = await db!.delete(table, where: 'id = ?', whereArgs: [id]);
+    print(result);
   }
 
   Future<int> delete(String table, int id) async {

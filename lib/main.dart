@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:notebook/home.dart';
-import 'package:notebook/services/addnote.dart';
+import 'package:notebook/screens/addnote.dart';
+import 'package:notebook/screens/viewnote.dart';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

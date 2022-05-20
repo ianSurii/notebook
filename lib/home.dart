@@ -1,7 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:notebook/database/core.dart';
-import 'package:notebook/services/addnote.dart';
+import 'package:notebook/screens/addnote.dart';
+import 'package:notebook/screens/viewnote.dart';
 
 import 'models/note.dart';
 
@@ -40,9 +41,15 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink.shade200,
-        title: Text('Notebook'),
-      ),
+          backgroundColor: Colors.pink.shade200,
+          title: Text(
+            'Notebook',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          )),
       body: Container(
           width: size.width,
           height: size.height,
@@ -102,60 +109,99 @@ class _HomeState extends State<Home> {
                       )
                     : ListView.builder(
                         itemBuilder: ((context, index) {
-                          return Container(
+                          return ElevatedButton(
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.white),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewNote(
+                                            note: _notes[index],
+                                          )));
+                            },
+                            child: Container(
                               width: size.width,
                               height: size.height * 0.1,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
-                                      blurRadius: 10),
-                                ],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                              constraints: BoxConstraints(
+                                maxHeight: size.height * 0.1,
+                                minHeight: 10,
+                                minWidth: size.width,
                               ),
-                              child: Container(
-                                width: size.width,
-                                height: size.height * 0.1,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text((_notes[index].title == 0)
-                                              ? "note"
-                                              : "shoppig cart"),
-                                          //parse date the split the date only
-                                          Text(
-                                              "${_notes[index].date!.split(" ")[0]}"),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text("${_notes[index].title}",
-                                              style: TextStyle(
-                                                  fontSize: 13,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                                (_notes[index].type == 0)
+                                                    ? "Note"
+                                                    : "Shoppig cart",
+                                                style: TextStyle(
+                                                  fontSize: 10,
                                                   color: Colors.black,
-                                                  fontWeight:
-                                                      FontWeight.normal)),
-                                        ],
-                                      ),
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                          ],
+                                        ),
+                                        //parse date the split the date only
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                    "${_notes[index].date!.split(" ")[0]}",
+                                                    style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                              ),
+                                              Icon(
+                                                (_notes[index].type == 0)
+                                                    ? Icons.note
+                                                    : Icons.shopping_cart,
+                                                color: Colors.pink,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ));
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text("${_notes[index].title}",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         }),
-                        itemCount: 10),
+                        itemCount: _notes.length,
+                      ),
               ))
             ],
           )),
